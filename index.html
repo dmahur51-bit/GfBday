@@ -11,6 +11,7 @@
       color: #333;
       overflow-x: hidden;
       padding: 40px;
+      cursor: pointer; /* Hint: click to play music */
     }
     img {
       width: 250px;
@@ -76,22 +77,20 @@
   </div>
 
   <!-- Violin birthday tune -->
-  <audio autoplay loop muted id="bgMusic">
+  <audio id="bgMusic" loop>
     <source src="kalank.mp3" type="audio/mpeg">
   </audio>
   
   <script>
-        // Try to unmute after page loads
-        window.addEventListener('load', () => {
-            const music = document.getElementById('bgMusic');
-            music.muted = false; // Attempt to unmute
-            music.play().catch(err => {
-                console.log("Autoplay blocked until user interacts.");
-            });
-        });
-  </script>
-  
-  <script>
+    // Wait for first user interaction to start music
+    function startMusic() {
+      const music = document.getElementById('bgMusic');
+      music.play().catch(err => console.log("Playback failed:", err));
+      document.body.removeEventListener('click', startMusic);
+    }
+    document.body.addEventListener('click', startMusic);
+
+    // Floating hearts
     function createHeart() {
       const heart = document.createElement("div");
       heart.className = "heart";
@@ -103,9 +102,5 @@
     }
     setInterval(createHeart, 500);
   </script>
-
 </body>
 </html>
-
-
-
