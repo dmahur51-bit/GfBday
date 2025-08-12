@@ -53,9 +53,8 @@
       0% { transform: translateY(0); }
       100% { transform: translateY(-100vh); }
     }
-    /* Hide video but keep it playing */
     #bgVideo {
-      display: none;
+      display: none; /* hidden but still plays */
     }
   </style>
 </head>
@@ -95,16 +94,13 @@
     }
 
     function removeEvents() {
-      document.removeEventListener('touchstart', fadeInVideo);
       document.removeEventListener('click', fadeInVideo);
-      document.removeEventListener('scroll', fadeInVideo);
-      document.removeEventListener('mousemove', fadeInVideo);
+      document.removeEventListener('touchstart', fadeInVideo);
     }
 
-    document.addEventListener('touchstart', fadeInVideo);
+    // Only trigger on actual click/tap (works on desktop & mobile)
     document.addEventListener('click', fadeInVideo);
-    document.addEventListener('scroll', fadeInVideo);
-    document.addEventListener('mousemove', fadeInVideo);
+    document.addEventListener('touchstart', fadeInVideo);
 
     // Floating hearts
     function createHeart() {
