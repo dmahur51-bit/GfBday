@@ -61,32 +61,48 @@
   <img src="https://media.tenor.com/_4YgA77ExHEAAAAC/cute-blush.gif" alt="Blushing GIF">
 
   <div class="message">
-    Sadly your day is about to end but, I wish you have a great day of your life today. May all your wishes come true. I prayed for your happiness from God. Once again, happiest birthday to you! ❤️
+    Sadly your day is about to end but, I wish you have a great day of your life today.  
+    May all your wishes come true. I prayed for your happiness from God.  
+    Once again, happiest birthday to you! ❤️
   </div>
 
-  <!-- Violin birthday tune -->
-  <audio autoplay loop muted playsinline id="bgMusic">
+  <!-- Music -->
+  <audio autoplay loop playsinline id="bgMusic">
     <source src="kalank.mp3" type="audio/mpeg">
   </audio>
   
   <script>
     const music = document.getElementById('bgMusic');
+    music.volume = 0; // start silent
+    music.play().catch(() => {});
 
-    // Unmute when user interacts
-    function unmuteMusic() {
-      music.muted = false;
-      music.play().catch(() => {});
-      document.removeEventListener('touchstart', unmuteMusic);
-      document.removeEventListener('click', unmuteMusic);
-      document.removeEventListener('scroll', unmuteMusic);
-      document.removeEventListener('mousemove', unmuteMusic);
+    function fadeInMusic() {
+      let vol = 0;
+      const fade = setInterval(() => {
+        if (vol < 1) {
+          vol += 0.05;
+          music.volume = Math.min(vol, 1);
+        } else {
+          clearInterval(fade);
+        }
+      }, 200);
+
+      removeEvents();
     }
-    document.addEventListener('touchstart', unmuteMusic);
-    document.addEventListener('click', unmuteMusic);
-    document.addEventListener('scroll', unmuteMusic);
-    document.addEventListener('mousemove', unmuteMusic);
 
-    // Floating hearts animation
+    function removeEvents() {
+      document.removeEventListener('touchstart', fadeInMusic);
+      document.removeEventListener('click', fadeInMusic);
+      document.removeEventListener('scroll', fadeInMusic);
+      document.removeEventListener('mousemove', fadeInMusic);
+    }
+
+    document.addEventListener('touchstart', fadeInMusic);
+    document.addEventListener('click', fadeInMusic);
+    document.addEventListener('scroll', fadeInMusic);
+    document.addEventListener('mousemove', fadeInMusic);
+
+    // Floating hearts
     function createHeart() {
       const heart = document.createElement("div");
       heart.className = "heart";
