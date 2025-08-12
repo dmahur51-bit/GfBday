@@ -11,7 +11,6 @@
       color: #333;
       overflow-x: hidden;
       padding: 40px;
-      cursor: pointer; /* Hint: click to play music */
     }
     img {
       width: 250px;
@@ -77,18 +76,34 @@
   </div>
 
   <!-- Violin birthday tune -->
-  <audio id="bgMusic" loop>
+  <audio autoplay loop id="bgMusic" muted>
     <source src="kalank.mp3" type="audio/mpeg">
   </audio>
   
   <script>
-    // Wait for first user interaction to start music
-    function startMusic() {
-      const music = document.getElementById('bgMusic');
-      music.play().catch(err => console.log("Playback failed:", err));
-      document.body.removeEventListener('click', startMusic);
+    const music = document.getElementById('bgMusic');
+
+    // Try autoplay with slight delay (works on desktop Chrome sometimes)
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        music.muted = false;
+        music.play().catch(err => console.log("Autoplay blocked:", err));
+      }, 200);
+    });
+
+    // Mobile & fallback — unmute on any user interaction
+    function unmuteOnAction() {
+      music.muted = false;
+      music.play().catch(() => {});
+      document.removeEventListener('touchstart', unmuteOnAction);
+      document.removeEventListener('click', unmuteOnAction);
+      document.removeEventListener('scroll', unmuteOnAction);
+      document.removeEventListener('mousemove', unmuteOnAction);
     }
-    document.body.addEventListener('click', startMusic);
+    document.addEventListener('touchstart', unmuteOnAction, { once: true });
+    document.addEventListener('click', unmuteOnAction, { once: true });
+    document.addEventListener('scroll', unmuteOnAction, { once: true });
+    document.addEventListener('mousemove', unmuteOnAction, { once: true });
 
     // Floating hearts
     function createHeart() {
