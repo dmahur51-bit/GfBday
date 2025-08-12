@@ -76,10 +76,21 @@
   </div>
 
   <!-- Violin birthday tune -->
-  <audio autoplay loop>
+  <audio autoplay loop muted id="bgMusic">
     <source src="kalank.mp3" type="audio/mpeg">
   </audio>
-
+  
+  <script>
+        // Try to unmute after page loads
+        window.addEventListener('load', () => {
+            const music = document.getElementById('bgMusic');
+            music.muted = false; // Attempt to unmute
+            music.play().catch(err => {
+                console.log("Autoplay blocked until user interacts.");
+            });
+        });
+  </script>
+  
   <script>
     function createHeart() {
       const heart = document.createElement("div");
@@ -95,5 +106,6 @@
 
 </body>
 </html>
+
 
 
