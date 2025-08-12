@@ -61,41 +61,32 @@
   <img src="https://media.tenor.com/_4YgA77ExHEAAAAC/cute-blush.gif" alt="Blushing GIF">
 
   <div class="message">
-    Sadly your day is about to end but ,I wish you have a great day of your life today may all your wishes came true , I prayed for you happiness from god at last once again a happpppppiesttttttt brdayyyyy to youuuuuuuuuuuuuuuuu Ly byeeeeeeeeeeee
-    <br> 
+    Sadly your day is about to end but, I wish you have a great day of your life today. May all your wishes come true. I prayed for your happiness from God. Once again, happiest birthday to you! ❤️
   </div>
 
   <!-- Violin birthday tune -->
-  <audio autoplay loop id="bgMusic" muted>
+  <audio autoplay loop muted playsinline id="bgMusic">
     <source src="kalank.mp3" type="audio/mpeg">
   </audio>
   
   <script>
     const music = document.getElementById('bgMusic');
 
-    // Try autoplay with slight delay (works on desktop Chrome sometimes)
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        music.muted = false;
-        music.play().catch(err => console.log("Autoplay blocked:", err));
-      }, 200);
-    });
-
-    // Mobile & fallback — unmute on any user interaction
-    function unmuteOnAction() {
+    // Unmute when user interacts
+    function unmuteMusic() {
       music.muted = false;
       music.play().catch(() => {});
-      document.removeEventListener('touchstart', unmuteOnAction);
-      document.removeEventListener('click', unmuteOnAction);
-      document.removeEventListener('scroll', unmuteOnAction);
-      document.removeEventListener('mousemove', unmuteOnAction);
+      document.removeEventListener('touchstart', unmuteMusic);
+      document.removeEventListener('click', unmuteMusic);
+      document.removeEventListener('scroll', unmuteMusic);
+      document.removeEventListener('mousemove', unmuteMusic);
     }
-    document.addEventListener('touchstart', unmuteOnAction, { once: true });
-    document.addEventListener('click', unmuteOnAction, { once: true });
-    document.addEventListener('scroll', unmuteOnAction, { once: true });
-    document.addEventListener('mousemove', unmuteOnAction, { once: true });
+    document.addEventListener('touchstart', unmuteMusic);
+    document.addEventListener('click', unmuteMusic);
+    document.addEventListener('scroll', unmuteMusic);
+    document.addEventListener('mousemove', unmuteMusic);
 
-    // Floating hearts
+    // Floating hearts animation
     function createHeart() {
       const heart = document.createElement("div");
       heart.className = "heart";
