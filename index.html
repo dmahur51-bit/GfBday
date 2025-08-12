@@ -5,13 +5,35 @@
   <title>Romantic Birthday Page</title>
   <style>
     body {
-      background: linear-gradient(135deg, #ffe4e1, #ffd1dc);
+      margin: 0;
+      padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      text-align: center;
       color: #333;
       overflow-x: hidden;
-      padding: 40px;
+      text-align: center;
     }
+
+    /* Background video full screen */
+    #bgVideo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    /* Main content styles */
+    .content {
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 15px;
+      display: inline-block;
+      margin-top: 80px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    }
+
     img {
       width: 250px;
       border-radius: 15px;
@@ -19,30 +41,31 @@
       animation: float 3s ease-in-out infinite alternate;
       margin-bottom: 5px;
     }
+
     @keyframes float {
       to { transform: translateY(-10px); }
     }
+
     h1 {
       font-size: 2.5rem;
       margin-bottom: 10px;
       color: #b83f6a;
       font-style: italic;
     }
+
     .caption {
       font-size: 1.2rem;
       color: #d94f73;
       margin-bottom: 20px;
     }
+
     .message {
-      background: rgba(255,255,255,0.8);
-      border-radius: 15px;
-      margin: auto;
-      padding: 25px;
-      max-width: 600px;
       font-size: 1.1rem;
       line-height: 1.6;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      color: #444;
     }
+
+    /* Floating hearts */
     .heart {
       position: fixed;
       bottom: 0;
@@ -56,51 +79,54 @@
   </style>
 </head>
 <body>
-  <h1>Happy Birthday Aakriti ❤️</h1>
-  <div class="caption">Me when you smile</div>
-  <img src="https://media.tenor.com/_4YgA77ExHEAAAAC/cute-blush.gif" alt="Blushing GIF">
 
-  <div class="message">
-    Sadly your day is about to end but, I wish you have a great day of your life today.  
-    May all your wishes come true. I prayed for your happiness from God.  
-    Once again, happiest birthday to you! ❤️
+  <!-- Background video -->
+  <video autoplay loop muted playsinline id="bgVideo">
+    <source src="kalank.mp4" type="video/mp4">
+  </video>
+
+  <div class="content">
+    <h1>Happy Birthday Aakriti ❤️</h1>
+    <div class="caption">Me when you smile</div>
+    <img src="https://media.tenor.com/_4YgA77ExHEAAAAC/cute-blush.gif" alt="Blushing GIF">
+
+    <div class="message">
+      Sadly your day is about to end but ,I wish you have a great day of your life today may all your wishes came true , I prayed for you happiness from god at last once again a happpppppiesttttttt brdayyyyy to youuuuuuuuuuuuuuuuu Ly byeeeeeeeeeeee
+    </div>
   </div>
 
-  <!-- Music -->
-  <audio autoplay loop playsinline id="bgMusic">
-    <source src="kalank.mp3" type="audio/mpeg">
-  </audio>
-  
   <script>
-    const music = document.getElementById('bgMusic');
-    music.volume = 0; // start silent
-    music.play().catch(() => {});
+    const video = document.getElementById('bgVideo');
+    video.volume = 0; // Start silent
 
-    function fadeInMusic() {
+    // Fade in sound on interaction
+    function fadeInVideo() {
       let vol = 0;
       const fade = setInterval(() => {
         if (vol < 1) {
           vol += 0.05;
-          music.volume = Math.min(vol, 1);
+          video.volume = Math.min(vol, 1);
         } else {
           clearInterval(fade);
         }
       }, 200);
 
+      video.muted = false;
+      video.play().catch(()=>{});
       removeEvents();
     }
 
     function removeEvents() {
-      document.removeEventListener('touchstart', fadeInMusic);
-      document.removeEventListener('click', fadeInMusic);
-      document.removeEventListener('scroll', fadeInMusic);
-      document.removeEventListener('mousemove', fadeInMusic);
+      document.removeEventListener('touchstart', fadeInVideo);
+      document.removeEventListener('click', fadeInVideo);
+      document.removeEventListener('scroll', fadeInVideo);
+      document.removeEventListener('mousemove', fadeInVideo);
     }
 
-    document.addEventListener('touchstart', fadeInMusic);
-    document.addEventListener('click', fadeInMusic);
-    document.addEventListener('scroll', fadeInMusic);
-    document.addEventListener('mousemove', fadeInMusic);
+    document.addEventListener('touchstart', fadeInVideo);
+    document.addEventListener('click', fadeInVideo);
+    document.addEventListener('scroll', fadeInVideo);
+    document.addEventListener('mousemove', fadeInVideo);
 
     // Floating hearts
     function createHeart() {
